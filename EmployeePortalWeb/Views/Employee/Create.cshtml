@@ -1,0 +1,70 @@
+﻿@model EmployeePortalWeb.Models.Employee
+
+@{
+    ViewData["Title"] = "Create New Employee";
+}
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(135deg, #8A2BE2, #E6A9FC);">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+            <img src="~/images/huly.png" alt="Logo" width="160" class="me-3 rounded-circle">
+            <button class="btn btn-light px-5 py-2 rounded-pill shadow-lg hover-shadow">
+                Home
+            </button>
+        </a>
+    </div>
+</nav>
+
+<h1 class="text-center py-3" style="background: linear-gradient(135deg, #FFEB99, #FFFBCC); color: #6A4C8C; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); border-radius: 15px;">
+    @ViewData["Title"]
+</h1>
+
+
+<h4 class="text-center text-muted mb-4">Fill in the details below to create a new employee profile</h4>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data" class="p-4 rounded shadow-sm" style="background: #f9f9f9; max-width: 600px; margin: 0 auto;">
+    <div class="form-group mb-3">
+        <label asp-for="FirstName" class="form-label fw-bold"></label>
+        <input asp-for="FirstName" class="form-control" placeholder="Enter First Name" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="LastName" class="form-label fw-bold"></label>
+        <input asp-for="LastName" class="form-control" placeholder="Enter Last Name" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Email" class="form-label fw-bold"></label>
+        <input asp-for="Email" class="form-control" type="email" placeholder="Enter Email Address" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="DateOfBirth" class="form-label fw-bold"></label>
+        <input asp-for="DateOfBirth" class="form-control" type="date" />
+        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="PDFDocumentPath" class="form-label fw-bold">Upload PDF Document</label>
+        <input type="file" name="pdfFile" class="form-control" />
+        <span asp-validation-for="PDFDocumentPath" class="text-danger"></span>
+    </div>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary px-5 py-2 rounded-pill shadow-lg">Create Employee</button>
+    </div>
+</form>
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("Index", "Employee")" class="btn btn-outline-secondary px-5 py-2 rounded-pill">Back to Employee List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container my-5">
+    <h2 class="text-center text-primary">Welcome to EmployeePortal</h2>
+
+    <div class="problem-statement">
+        <h3>🌟 About Employee Management Portal</h3>
+        <p>
+            The <strong>Employee Management Portal</strong> is a web-based application designed to efficiently manage employees within an organization.
+            It provides functionalities for both <strong>Admins</strong> and <strong>Employees</strong>.
+        </p>
+
+        <h4 class="text-primary">👨‍💼 Admin Features</h4>
+        <ul>
+            <li>Add, update, delete, and view employee details</li>
+            <li>Create employee accounts</li>
+        </ul>
+
+        <h4 class="text-primary">👨‍🏭 Employee Features</h4>
+        <ul>
+            <li>View personal information</li>
+            <li>Update password</li>
+            <li>Upload important documents (PDF)</li>
+        </ul>
+
+        <h4 class="text-primary">🛠️ Technology Stack</h4>
+        <ul>
+            <li>PostgreSQL</li>
+            <li>ASP.NET MVC with Razor</li>
+        </ul>
+    </div>
+
+    <div class="text-center">
+        <a href="@Url.Action("Login", "Account")" class="btn btn-primary">Login</a>
+        <a href="@Url.Action("Register", "Account")" class="btn btn-secondary">Register</a>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+﻿@model EmployeePortalWeb.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(135deg, #8A2BE2, #E6A9FC);">
+    <div class="container">
+
+        <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+            <img src="~/images/huly.png" alt="Logo" width="160" class="me-3 rounded-circle">
+            <button class="btn btn-light px-5 py-2 rounded-pill shadow-lg hover-shadow">
+                Home
+            </button>
+        </a>
+
+ 
+        <div class="d-flex align-items-center ms-auto">
+            <form method="post" action="@Url.Action("Logout", "Account")">
+                <button type="submit" class="btn btn-light px-5 py-2 rounded-pill shadow-lg hover-shadow">
+                    LogOut
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container my-5" style="background-color: #F9F9F9; border-radius: 10px; padding: 20px;">
+    <h2 class="text-center text-info mb-4">@ViewData["Title"]</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="background-color: #F8D7DA; border-color: #F5C6CB;">
+            <strong>Error:</strong> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #D4EDDA; border-color: #C3E6CB;">
+            <strong>Success:</strong> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model != null)
+    {
+        <div class="card shadow-lg mb-4" style="border-radius: 15px;">
+            <div class="card-header bg-primary text-white" style="border-radius: 15px 15px 0 0;">
+                <h4>Employee Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3 text-success">First Name</dt>
+                    <dd class="col-sm-9">@Model.FirstName</dd>
+
+                    <dt class="col-sm-3 text-success">Last Name</dt>
+                    <dd class="col-sm-9">@Model.LastName</dd>
+
+                    <dt class="col-sm-3 text-success">Email</dt>
+                    <dd class="col-sm-9">@Model.Email</dd>
+
+                    <dt class="col-sm-3 text-success">Date of Birth</dt>
+                    <dd class="col-sm-9">@Model.DateOfBirth.Date</dd>
+
+                    <dt class="col-sm-3 text-success">PDF Document</dt>
+                    <dd class="col-sm-9">
+                        @if (!string.IsNullOrEmpty(Model.PDFDocumentPath))
+                        {
+                            <a href="@Url.Content("~/" + Model.PDFDocumentPath)" target="_blank" class="btn btn-link text-primary">View PDF</a>
+                        }
+                        else
+                        {
+                            <span>No document uploaded</span>
+                        }
+                    </dd>
+                </dl>
+
+
+                @if (User.IsInRole("Employee"))
+                {
+                    <button class="btn btn-warning mt-3" onclick="togglePasswordChange()" style="background-color: #FFD700; color: black; border-radius: 25px;">Change Password</button>
+
+                    <div id="passwordChangeForm" style="display: none; margin-top: 20px;">
+                        <div class="card">
+                            <div class="card-header bg-warning text-white" style="border-radius: 15px 15px 0 0;">
+                                <h4>Change Password</h4>
+                            </div>
+                            <div class="card-body">
+                                <form asp-action="ChangePassword" method="post">
+                                    <input type="hidden" name="email" value="@Model.Email" />
+
+                                    <div class="form-group">
+                                        <label for="currentPassword">Current Password</label>
+                                        <input type="password" class="form-control" name="currentPassword" required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input type="password" class="form-control" name="newPassword" required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm New Password</label>
+                                        <input type="password" class="form-control" name="confirmPassword" required />
+                                    </div>
+
+                                    <button type="submit" class="btn btn-success mt-2" style="border-radius: 25px;">Update Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" style="background-color: #FFF3CD; border-color: #FFEEBA;">
+            <strong>Warning:</strong> No employee data available.
+        </div>
+    }
+</div>
+
+<script>
+    function togglePasswordChange() {
+        var form = document.getElementById("passwordChangeForm");
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+</script>

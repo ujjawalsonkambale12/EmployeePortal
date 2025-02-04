@@ -1,0 +1,77 @@
+﻿@model IEnumerable<EmployeePortalWeb.Models.Employee>
+
+@{
+    ViewData["Title"] = "Admin Portal: Employee Management";
+}
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(135deg, #8A2BE2, #E6A9FC);">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Home")">
+            <img src="~/images/huly.png" alt="Logo" width="160" class="me-3 rounded-circle">
+            <button class="btn btn-light px-5 py-2 rounded-pill shadow-lg hover-shadow">
+                Home
+            </button>
+        </a>
+
+        <div class="d-flex align-items-center ms-auto">
+            <form method="post" action="@Url.Action("Logout", "Account")">
+                <button type="submit" class="btn btn-light px-5 py-2 rounded-pill shadow-lg hover-shadow">
+                    LogOut
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container my-5">
+    <h1 class="text-center py-3" style="background: linear-gradient(135deg, #FFEB99, #FFFBCC); color: #6A4C8C; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); border-radius: 15px;">
+        @ViewData["Title"]
+    </h1>
+
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>@TempData["SuccessMessage"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p class="alert alert-warning">No employees found.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered shadow-lg">
+                <thead>
+                    <tr class="text-center">
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model)
+                    {
+                        <tr>
+                            <td>@employee.FirstName @employee.LastName</td>
+                            <td>@employee.DateOfBirth.ToShortDateString()</td>
+                            <td class="text-center">
+                                <a href="@Url.Action("Edit", "Employee", new { id = employee.Id })" class="btn btn-primary shadow-sm">Edit</a>
+                                <a href="@Url.Action("Delete", "Employee", new { id = employee.Id })" class="btn btn-danger shadow-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div class="text-center my-3">
+        <a href="@Url.Action("Create", "Employee")" class="btn btn-success btn-lg shadow-lg">Add New Employee</a>
+    </div>
+    </

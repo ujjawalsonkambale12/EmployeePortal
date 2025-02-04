@@ -1,0 +1,17 @@
+﻿@model EmployeePortalWeb.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Deletion Confirmation";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-success" role="alert">
+    <strong>Success!</strong> The employee <strong>@Model.FirstName @Model.LastName</strong> has been deleted successfully.
+</div>
+
+<p>The employee has been successfully removed from the system. If you need to make any further changes, please go back to the employee list.</p>
+
+<p>
+    <a href="@Url.Action("Index", "Employee")" class="btn btn-primary">Back to Employee List</a>
+</p>
